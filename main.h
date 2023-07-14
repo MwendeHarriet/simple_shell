@@ -14,6 +14,9 @@
 #include <dirent.h>
 #include <stdarg.h>
 
+/*used in our_getline*/
+#define BUFFERSIZE 1024
+
 /*our_putchar*/
 int our_putchar(char c);
 
