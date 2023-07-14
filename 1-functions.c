@@ -28,3 +28,21 @@ size_t our_strlen(const char *str)
 	}
 	return (pointer - str);
 }
+
+/**
+ * our_strcmp -compares two strings
+ * @str1: pointer to first string
+ * @str2: pointer to second string
+ * Return: 0 if the strings are equal or negative value if
+ * str1 < str2 or positive value if str1 is > str1
+ */
+
+int our_strcmp(const char *str1, const char *str2)
+{
+	while (*str1 != '\0' && (*str1 == *str2))
+	{
+		str1++;
+		str2++;
+	}
+	return (*str1 - *str2);
+}
