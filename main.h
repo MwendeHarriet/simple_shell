@@ -36,4 +36,10 @@ char *read_line(void);
 /*our_strcmp*/
 int our_strcmp(const char *str1, const char *str2);
 
+/*our_env*/
+void our_env(void);
+
+/*arguments*/
+int parse_arguments(char *input, char **args);
+
 #endif
