@@ -28,9 +28,9 @@ ssize_t our_getline(char **lineptr, size_t *n, FILE *stream);
 size_t our_strlen(const char *str);
 
 /*simple_shell*/
-void execute_input(char *input, int argc);
+void execute_input(char *input);
 void display_prompt(void);
-int main(int argc, char *argv[]);
+int main(void);
 char *read_line(void);
 
 /*our_strcmp*/

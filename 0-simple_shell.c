@@ -10,15 +10,24 @@ void display_prompt(void)
 
 /**
   *execute_input - functions to execute commands
-  *@input: The command to be executed
-  *@argc: argument counter
+  *@input: The command to be executed.
   *Return: the result after execution of command
   */
-void execute_input(char *input, int argc)
+void execute_input(char *input)
 {
-	char *argv[] = {input, NULL};
+	int val;
+	char **argv = malloc(2 * sizeof(char *));
 
-	int val = execve(input, argv, NULL);
+	if (argv == NULL)
+	{
+		perror("Error: Memory allocation failed");
+		exit(1);
+	}
+
+	argv[0] = input;
+	argv[1] = NULL;
+
+	val = execve(input, argv, NULL);
 
 	if (val == -1)
 	{
@@ -27,7 +36,9 @@ void execute_input(char *input, int argc)
 		write(STDOUT_FILENO, error_statement, 30);
 		exit(1);
 	}
+	free(argv);
 }
+
 /**
   *read_line - read a line from the standard input
   *
@@ -57,11 +68,9 @@ char *read_line(void)
 
 /**
   *main - Entry point
-  *@argc: The number of command-line arguments
-  *@argv: Array of command-line arguments
   *Return: 0
   */
-int main(int argc, char *argv[])
+int main(void)
 {
 	ssize_t buffersize;
 	char *input = NULL;
@@ -91,7 +100,7 @@ int main(int argc, char *argv[])
 		}
 		else if (pid == 0)
 		{
-			execute_input(input, argc);
+			execute_input(input);
 		}
 		else
 		{
