@@ -1,18 +1,17 @@
 #include "main.h"
 
 /**
- * free_and_exit -frees the memory and exits the
- * programme with a failure status
+ * free_and_exit -frees the memory and exits with failure status
  * description: the function frees the memory pointed to
  * by line_buffer using free() and exits with the failure
  * status using exit()
- *@line_buffer: pointer to pointer to character
+ * @line_buffer: pointer to pointer to character
  */
 void free_and_exit(char **line_buffer)
 {
 	free(*line_buffer);
 	exit(EXIT_FAILURE);
-
+}
 /**
  *our_getline -our implementation of the LINUX getline which
  *reads a line from stdin
@@ -50,7 +49,7 @@ ssize_t our_getline(char **lineptr, size_t *n, FILE *stream)
 				free_and_exit(lineptr);
 		}
 		bytes_read = read(STDIN_FILENO, &curr_chars, 1);
-		if (bytes_read == 0 && length = 0)
+		if (bytes_read == 0 && length == 0)
 			return (-1);
 		else if (bytes_read == 0)
 		{
@@ -60,7 +59,7 @@ ssize_t our_getline(char **lineptr, size_t *n, FILE *stream)
 		if (curr_chars == '\n')
 		{
 			(*lineptr)[length] = curr_chars;
-			return (i + 1);
+			return (length + 1);
 		}
 		(*lineptr)[length] = curr_chars;
 		(*lineptr)[length + 1] = '\0';
