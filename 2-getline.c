@@ -1,11 +1,12 @@
 #include "main.h"
 
 /**
- * void free_and_exit -frees the memory and exits the
+ * free_and_exit -frees the memory and exits the
  * programme with a failure status
  * description: the function frees the memory pointed to
  * by line_buffer using free() and exits with the failure
  * status using exit()
+ *@line_buffer: pointer to pointer to character
  */
 void free_and_exit(char **line_buffer)
 {
@@ -24,15 +25,46 @@ void free_and_exit(char **line_buffer)
  *Return: on success length of line read or if an error occurs or end of
  *file is reached it returns -1
  */
-ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
+ssize_t our_getline(char **lineptr, size_t *n, FILE *stream)
 {
 	ssize_t length = 0;
 
-	char curr_characters;
-	int read_result;
+	char curr_chars;
+	int bytes_read;
 	(void)stream;
-	
-	if (n ==NULL || lineptr == NULL || *lineptr ==NULL)
-	       exit(EXIT_FAILURE);
-	
-	*n = BUFFERSIZE;	
+	if (n == NULL || lineptr == NULL || *lineptr == NULL)
+		exit(EXIT_FAILURE);
+	*n = BUFFERSIZE;
+	*lineptr = malloc(*n);
+	if (*lineptr == NULL)
+		exit(EXIT_FAILURE);
+	fflush(stdout);
+	(*lineptr)[0] = '\0';
+	for (length = 0; ; length++)
+	{
+		if (our_strlen(*lineptr) + 1 == *n)
+		{
+			*n *= 2;
+			*lineptr = realloc(*lineptr, *n);
+			if (*lineptr == NULL)
+				free_and_exit(lineptr);
+		}
+		bytes_read = read(STDIN_FILENO, &curr_chars, 1);
+		if (bytes_read == 0 && length = 0)
+			return (-1);
+		else if (bytes_read == 0)
+		{
+			bytes_read--;
+			continue;
+		}
+		if (curr_chars == '\n')
+		{
+			(*lineptr)[length] = curr_chars;
+			return (i + 1);
+		}
+		(*lineptr)[length] = curr_chars;
+		(*lineptr)[length + 1] = '\0';
+	}
+	free(*lineptr);
+	exit(EXIT_FAILURE);
+}

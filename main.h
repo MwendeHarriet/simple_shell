@@ -24,4 +24,7 @@ int our_putchar(char c);
 void free_and_exit(char **line_buffer);
 ssize_t our_getline(char **lineptr, size_t *n, FILE *stream);
 
+/*our_strlen*/
+size_t our_strlen(const char *str);
+
 #endif
