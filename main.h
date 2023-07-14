@@ -18,6 +18,7 @@
 int our_putchar(char c);
 
 /*our_getline*/
+void free_and_exit(char **line_buffer);
 ssize_t our_getline(char **lineptr, size_t *n, FILE *stream);
 
 #endif
