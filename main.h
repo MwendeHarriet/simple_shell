@@ -14,6 +14,7 @@
 #include <dirent.h>
 #include <stdarg.h>
 
-/**/
+/*our_putchar*/
+int our_putchar(char c);
 
 #endif
