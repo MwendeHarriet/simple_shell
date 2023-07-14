@@ -29,6 +29,7 @@ void execute_input(char *input, int argc)
 	}
 }
 /**
+<<<<<<< HEAD
   *read_line - read a line from the standard input
   *
   *Return: pointer that points to a str with the line content
@@ -103,3 +104,6 @@ int main(int argc, char *argv[])
 	}
 	return (0);
 }
+=======
+ */
+>>>>>>> 92048228ff9d8b706d056798f7ccd828a62fe5e1
