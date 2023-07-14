@@ -17,4 +17,7 @@
 /*our_putchar*/
 int our_putchar(char c);
 
+/*our_getline*/
+ssize_t our_getline(char **lineptr, size_t *n, FILE *stream);
+
 #endif
