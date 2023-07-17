@@ -44,4 +44,7 @@ void our_env(void);
 /*arguments*/
 int parse_arguments(char *input, char **args);
 
+/*signal handler*/
+void sigint_handler(int sig);
+
 #endif
