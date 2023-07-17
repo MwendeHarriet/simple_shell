@@ -47,4 +47,10 @@ int parse_arguments(char *input, char **args);
 /*signal handler*/
 void sigint_handler(int sig, char *buffer);
 
+/*execute commands*/
+void execute_command(char *command, char **args);
+
+/*our_strcpy*/
+void our_strcpy(char *dest, const char *src);
+
 #endif

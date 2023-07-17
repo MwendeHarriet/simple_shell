@@ -46,3 +46,22 @@ int our_strcmp(const char *str1, const char *str2)
 	}
 	return (*str1 - *str2);
 }
+
+/**
+ * our_strcpy -copies the contents one one string to another
+ * including the null terminator
+ * @src: string to copy from
+ * @dest: string to copy to
+ * Return: nothing
+ */
+
+void our_strcpy(char *dest, const char *src)
+{
+	while (*src != '\0')
+	{
+		*dest = *src;
+		dest++;
+		src++;
+	}
+	*dest = '\0';
+}
