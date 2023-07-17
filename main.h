@@ -14,6 +14,8 @@
 #include <dirent.h>
 #include <stdarg.h>
 
+extern char **environ;
+
 /*used in our_getline*/
 #define BUFFERSIZE 1024
 
