@@ -14,6 +14,8 @@
 #include <dirent.h>
 #include <stdarg.h>
 
+#define MAX_ARGS 100
+
 extern char **environ;
 
 /*used in our_getline*/
@@ -33,7 +35,7 @@ size_t our_strlen(const char *str);
 void execute_input(char *input);
 void display_prompt(void);
 int main(void);
-char *read_line(void);
+void read_execute_loop(void);
 
 /*our_strcmp*/
 int our_strcmp(const char *str1, const char *str2);
@@ -43,5 +45,14 @@ void our_env(void);
 
 /*arguments*/
 int parse_arguments(char *input, char **args);
+
+/*signal handler*/
+void sigint_handler(int sig, char *buffer);
+
+/*execute commands*/
+void execute_command(char *command, char **args);
+
+/*our_strcpy*/
+void our_strcpy(char *dest, const char *src);
 
 #endif
