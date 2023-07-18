@@ -55,4 +55,10 @@ void execute_command(char *command, char **args);
 /*our_strcpy*/
 void our_strcpy(char *dest, const char *src);
 
+/*exit*/
+int exit_shell(char **args);
+
+/*our_atoi*/
+int our_atoi(const char *str);
+
 #endif

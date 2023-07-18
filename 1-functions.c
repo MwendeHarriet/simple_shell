@@ -65,3 +65,35 @@ void our_strcpy(char *dest, const char *src)
 	}
 	*dest = '\0';
 }
+
+/**
+ * our_atoi -converts a string into an integer
+ * @str: string to convert
+ * Return: an integer
+ */
+int our_atoi(const char *str)
+{
+	int i = 0;
+
+	int product = 0;
+
+	int is_pos_or_neg = 1;
+
+	while (str[i] == ' ')
+		i++;
+	if (str[i] == '-')
+	{
+		is_pos_or_neg = -1;
+		i++;
+	}
+	else if (str[i] == '+')
+	{
+		i++;
+	}
+	while (str[i] >= 0 && str[i] <= 9)
+	{
+		product = product * 10 + (str[i] - '0');
+		i++;
+	}
+	return (is_pos_or_neg * product);
+}
