@@ -32,9 +32,18 @@ void execute_input(char *input)
 		argc++;
 		token = strtok(NULL, " \t\n");
 	}
+
+	free(argv);
+	argv[0] = input;
+	argv[1] = NULL;
+
+	val = execve(input, argv, NULL);
+
+	if (val == -1)
 	argv[argc] = NULL;
 
 	if (argc == 0)
+
 	{
 		return;
 	}
@@ -52,6 +61,9 @@ void execute_input(char *input)
 		}
 	}
 
+	free(line);
+	return (line);
+
 	pid = fork();
 
 	if (pid < 0)
@@ -67,6 +79,7 @@ void execute_input(char *input)
 	{
 		wait(NULL);
 	}
+
 }
 
 /**
