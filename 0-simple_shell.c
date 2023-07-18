@@ -23,7 +23,7 @@ void execute_input(char *input)
 		perror("Error: Memory allocation failed");
 		exit(1);
 	}
-
+	free(argv);
 	argv[0] = input;
 	argv[1] = NULL;
 
@@ -63,6 +63,7 @@ char *read_line(void)
 			exit(EXIT_FAILURE);
 		}
 	}
+	free(line);
 	return (line);
 }
 
