@@ -5,6 +5,7 @@
  *@args: arguments
  *Return: 0
  */
+
 int exit_status(char **args)
 {
 	if (args[1])
