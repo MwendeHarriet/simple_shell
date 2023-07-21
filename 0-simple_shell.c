@@ -115,6 +115,7 @@ void read_execute_loop(void)
 
 		execute_input(input);
 	}
+	free(input);
 }
 
 /**
