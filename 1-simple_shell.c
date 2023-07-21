@@ -51,23 +51,29 @@ void execute_input(char *input)
 			exit(EXIT_SUCCESS);
 		}
 	}
-	pid = fork();
-
-	if (pid < 0)
+	else if (our_strcmp(argv[0], "env") == 0)
 	{
-		perror("Fork failed");
-		exit(EXIT_FAILURE);
-	}
-	else if (pid == 0)
-	{
-		execute_command(argv[0], argv);
-		exit(EXIT_SUCCESS);
+		our_env();
 	}
 	else
 	{
-		wait(NULL);
-	}
+		pid = fork();
 
+		if (pid < 0)
+		{
+			perror("Fork failed");
+			exit(EXIT_FAILURE);
+		}
+		else if (pid == 0)
+		{
+			execute_command(argv[0], argv);
+			exit(EXIT_SUCCESS);
+		}
+		else
+		{
+			wait(NULL);
+		}
+	}
 }
 
 /**
