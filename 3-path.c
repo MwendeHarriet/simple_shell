@@ -95,3 +95,50 @@ int path_main(void)
 	return (EXIT_SUCCESS);
 }
 
+/**
+ * find_command_path - Searches for the command in the directories
+ * listed in the "PATH" variable.
+ * @command: The command to find.
+ * @path: The "PATH" variable.
+ *
+ * Return: The full path of the command if found, NULL otherwise.
+ */
+char *find_command_path(char *command, char *path)
+{
+	char *token, *path_copy, *full_path;
+	int command_len, path_len, full_path_len;
+
+	command_len = our_strlen(command);
+	path_copy = our_strdup(path);
+	if (!path_copy)
+		return (NULL);
+
+	token = strtok(path_copy, ":");
+	while (token)
+	{
+		path_len = our_strlen(token);
+		full_path_len = path_len + command_len + 2;
+		full_path = malloc(full_path_len);
+		if (!full_path)
+		{
+			free(path_copy);
+			return (NULL);
+		}
+
+		our_strcpy(full_path, token);
+		our_strcat(full_path, "/");
+		our_strcat(full_path, command);
+
+		if (access(full_path, F_OK | X_OK) == 0)
+		{
+			free(path_copy);
+			return (full_path);
+		}
+
+		free(full_path);
+		token = strtok(NULL, ":");
+	}
+
+	free(path_copy);
+	return (NULL);
+}

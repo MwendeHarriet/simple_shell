@@ -7,10 +7,22 @@
  */
 void execute_command(char *command, char **args)
 {
+	char *path = getenv("PATH");
+	char *full_path = NULL;
 	char error_statement[100];
 
-	execve(command, args, NULL);
+	if (!command)
+	{
+		return;
+	}
+	if (path)
+		full_path = find_command_path(command, path);
 
+	if (full_path)
+	{
+		execve(full_path, args, NULL);
+		free(full_path);
+	}
 	our_strcpy(error_statement, command);
 	our_strcpy(error_statement + our_strlen(command),
 			": command not found\n");
