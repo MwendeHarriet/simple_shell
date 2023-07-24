@@ -73,12 +73,14 @@ int our_atoi(const char *str);
 
 void execute_ccommand(char *command);
 /*path.c*/
-char *find_command_path(char *command, char *path);
+char *find_command_path(char *command, const char *path);
 void process_input(void);
 int path_main(void);
 /*custom functions*/
 char *our_strdup(const char *s);
 void our_strcat(char *dest, const char *src);
-
+int our_snprintf(char *str, size_t size, const char *format, ...);
+const char *our_getenv(const char *name);
+int our_strncmp(const char *str1, const char *str2, size_t n);
 
 #endif

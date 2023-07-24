@@ -7,7 +7,7 @@
  */
 void execute_command(char *command, char **args)
 {
-	char *path = getenv("PATH");
+	const char *path = our_getenv("PATH");
 	char *full_path = NULL;
 	char error_statement[100];
 

@@ -63,7 +63,7 @@ void process_input(void)
 			break;
 		command[characters - 1] = '\0';
 
-		if (strcmp(command, "") == 0)
+		if (our_strcmp(command, "") == 0)
 			continue;
 
 		execute_ccommand(command);
@@ -81,9 +81,9 @@ void process_input(void)
 
 int path_main(void)
 {
-	char *path = NULL;
+	const char *path = NULL;
 
-	path = getenv("PATH");
+	path = our_getenv("PATH");
 	if (path == NULL)
 	{
 		write(STDERR_FILENO, "Failed to retrieve PATH environment variable\n", 45);
@@ -103,7 +103,7 @@ int path_main(void)
  *
  * Return: The full path of the command if found, NULL otherwise.
  */
-char *find_command_path(char *command, char *path)
+char *find_command_path(char *command, const char *path)
 {
 	char *token, *path_copy, *full_path;
 	int command_len, path_len, full_path_len;
