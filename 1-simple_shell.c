@@ -20,8 +20,7 @@ void display_prompt(void)
 void execute_input(char *input)
 {
 	int argc = 0;
-	char *argv[MAX_ARGS + 1];
-	char *token = strtok(input, " \t\n");
+	char *argv[MAX_ARGS + 1], char *token = strtok(input, " \t\n");
 	pid_t pid;
 
 	while (token != NULL && argc < MAX_ARGS)
@@ -31,7 +30,6 @@ void execute_input(char *input)
 		token = strtok(NULL, " \t\n");
 	}
 	argv[argc] = NULL;
-
 	if (argc == 0)
 	{
 		return;
@@ -102,7 +100,6 @@ void read_execute_loop(void)
 				exit(EXIT_FAILURE);
 			}
 		}
-
 		if (buffersize > 0 && input[buffersize - 1] == '\n')
 		{
 			input[buffersize - 1] = '\0';
