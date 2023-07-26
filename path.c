@@ -1,0 +1,100 @@
+#include "main.h"
+#include <string.h>
+
+/**
+ * put_paths - functions to set the array of the path
+ * @path: the specific array being set
+ * @num: tokens number
+ * @tok: tokened string
+ */
+void put_paths(char **path, const int num, char *tok)
+{
+	int j;
+
+	for (j = 0; j < num; j++)
+	{
+		path[j] = strdup(tok);
+		tok += strlen(tok) + 1;
+	}
+	path[j] = NULL;
+}
+/**
+ * path_free - frees paths array to prevent memory leaks
+ * @path: the specific array being set
+ * @num: the tokens number
+ * @return_value: this is the value being returned
+ * Return: return value
+ */
+int path_free(char **path, int num, int return_value)
+{
+	int j;
+
+	for (j = 0; j <= num; j++)
+		free(path[j]);
+	free(path);
+
+	return (return_value);
+}
+/**
+ * tokenize - this is the entry point
+ * Description: used to tokenize a string
+ * @s: the string beinng tokenized
+ * @c: the separator
+ * Return: num of tokens
+ */
+int tokenize(char *s, char c)
+{
+	int j, num = 1;
+
+	for (j = 0; s[j]; j++)
+	{
+		if (s[j] == c)
+		{
+			num++;
+			s[j] = '\0';
+		}
+	}
+	return (num);
+}
+
+/**
+ * path - functions to sort out the path
+ * @av: the path
+ * Return: 0 on failure.
+ */
+int path(char **av)
+{
+	struct stat st;
+	char *p = getenv("PATH"), filepath[256];
+	char **path = malloc(20 * sizeof(char *)), *tok;
+	int j, num = 1;
+
+	if (stat((*av), &st) == 0)
+		return (path_free(path, -1, 1));
+	if (p == NULL)
+		return (path_free(path, -1, 0));
+	tok = strdup(p);
+	num = tokenize(tok, ':');
+	put_paths(path, num, tok);
+	free(tok);
+	for (j = 0; j < num; j++)
+	{
+		strcpy(filepath, path[j]);
+		if (strncmp(filepath, (*av), strlen(filepath)) == 0)
+		{
+			if (stat((*av), &st) == 0)
+				return (path_free(path, num, 1));
+		}
+		else
+		{
+			strcat(filepath, "/");
+			strcat(filepath, (*av));
+			if (access(filepath, F_OK) == 0)
+			{
+				(*av) = strdup(filepath);
+				return (path_free(path, num, 2));
+			}
+		}
+	}
+	return (path_free(path, num, 0));
+}

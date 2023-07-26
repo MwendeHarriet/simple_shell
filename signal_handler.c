@@ -9,6 +9,6 @@ void sigint_handler(int sig, char *buffer)
 {
 	(void) sig;
 	free(buffer);
-	our_putchar('\n');
+	write(STDOUT_FILENO, "\n", 1);
 	exit(130);
 }

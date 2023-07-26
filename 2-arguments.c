@@ -15,7 +15,7 @@ int parse_arguments(char *input, char **args)
 
 	while (token != NULL)
 	{
-		args[count] = token;
+		args[count] = our_strdup(token);
 		count++;
 		token = strtok(NULL, " ");
 	}

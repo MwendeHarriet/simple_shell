@@ -7,26 +7,31 @@
  */
 void execute_command(char *command, char **args)
 {
-	const char *path = our_getenv("PATH");
-	char *full_path = NULL;
+	struct stat st;
 	char error_statement[100];
 
 	if (!command)
 	{
 		return;
 	}
-	if (path)
-		full_path = find_command_path(command, path);
-
-	if (full_path)
+	if (stat(command, &st) == 0)
 	{
-		execve(full_path, args, NULL);
-		free(full_path);
+		execve(command, args, NULL);
 	}
-	our_strcpy(error_statement, command);
-	our_strcpy(error_statement + our_strlen(command),
-			": command not found\n");
-
-	write(STDERR_FILENO, error_statement, our_strlen(error_statement));
-	exit(EXIT_FAILURE);
+	else
+	{
+		int result = path(&command);
+		if (result == 1)
+		{
+			our_strcpy(error_statement, command);
+			our_strcpy(error_statement + our_strlen(command),
+					": command not found\n");
+			write(STDERR_FILENO, error_statement, our_strlen(error_statement));
+			exit(EXIT_FAILURE);
+		}
+		else if (result == 2)
+		{
+			execve(command, args, NULL);
+		}
+	}
 }
