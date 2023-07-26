@@ -66,9 +66,8 @@ void our_strcpy(char *dest, const char *src)
 	*dest = '\0';
 }
 
-#include "main.h"
-
-/** our_atoi -converts a string into an integer
+/**
+ * our_atoi -converts a string into an integer
  * @str: string to convert
  * Return: an integer
  */
