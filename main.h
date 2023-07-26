@@ -82,7 +82,6 @@ void our_strcat(char *dest, const char *src);
 int our_snprintf(char *str, size_t size, const char *format, ...);
 const char *our_getenv(const char *name);
 int our_strncmp(const char *str1, const char *str2, size_t n);
-
+int shell_main(void);
 int tokenize(char *s, char c);
-
 #endif

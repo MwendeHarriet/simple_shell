@@ -21,6 +21,7 @@ void execute_command(char *command, char **args)
 	else
 	{
 		int result = path(&command);
+
 		if (result == 1)
 		{
 			our_strcpy(error_statement, command);
