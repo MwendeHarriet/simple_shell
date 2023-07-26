@@ -36,12 +36,11 @@ void execute_input(char *input)
 	{
 		return;
 	}
-
 	if (our_strcmp(argv[0], "exit") == 0)
 	{
 		if (argc > 1)
 		{
-			int exit_shell= our_atoi(argv[1]);
+			exit_shell = our_atoi(argv[1]);
 			exit(exit_shell);
 		}
 		else
@@ -75,7 +74,6 @@ void execute_input(char *input)
 }
 /**
   *read_execute_loop - read a line from the standard input
-  *
   *Return: pointer that points to a str with the line content
   */
 void read_execute_loop(void)
@@ -88,7 +86,6 @@ void read_execute_loop(void)
 	{
 		if (isatty(STDIN_FILENO))
 			display_prompt();
-
 		buffersize = getline(&input, &bufsize, stdin);
 		if (buffersize == -1)
 		{
