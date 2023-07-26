@@ -1,5 +1,4 @@
 #include "main.h"
-#include <string.h>
 
 /**
  * parse_arguments - Parses command line arguments

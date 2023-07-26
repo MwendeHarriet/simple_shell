@@ -1,9 +1,5 @@
 #include "main.h"
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/wait.h>
+
 
 /**
   *display_prompt -  Functions to allow user to see prompt
@@ -36,20 +32,20 @@ void execute_input(char *input)
 	{
 		return;
 	}
-
 	if (our_strcmp(argv[0], "exit") == 0)
 	{
 		if (argc > 1)
 		{
-			int exit_shell= our_atoi(argv[1]);
+			int exit_shell = our_atoi(argv[1]);
 			exit(exit_shell);
+			
 		}
 		else
 		{
 			exit(EXIT_SUCCESS);
 		}
 	}
-	else if (our_strcmp(argv[0], "env") == 0)
+	else if (our_strcmp(argv[0], "env" ) == 0)
 	{
 		our_env();
 	}

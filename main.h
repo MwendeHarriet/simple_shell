@@ -13,6 +13,7 @@
 #include <limits.h>
 #include <dirent.h>
 #include <stdarg.h>
+#include <string.h>
 
 #define MAX_ARGS 100
 
