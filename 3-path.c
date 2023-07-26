@@ -13,8 +13,8 @@ void put_paths(char **path, const int num, char *tok)
 
 	for (j = 0; j < num; j++)
 	{
-		path[j] = strdup(tok);
-		tok += strlen(tok) + 1;
+		path[j] = our_strdup(tok);
+		tok += our_strlen(tok) + 1;
 	}
 	path[j] = NULL;
 }
@@ -65,7 +65,8 @@ int tokenize(char *s, char c)
 int path(char **av)
 {
 	struct stat st;
-	char *p = getenv("PATH"), filepath[256];
+	const char *p = our_getenv("PATH");
+	char filepath[256];
 	char **path = malloc(20 * sizeof(char *)), *tok;
 	int j, num = 1;
 
@@ -73,25 +74,25 @@ int path(char **av)
 		return (path_free(path, -1, 1));
 	if (p == NULL)
 		return (path_free(path, -1, 0));
-	tok = strdup(p);
+	tok = our_strdup(p);
 	num = tokenize(tok, ':');
 	put_paths(path, num, tok);
 	free(tok);
 	for (j = 0; j < num; j++)
 	{
-		strcpy(filepath, path[j]);
-		if (strncmp(filepath, (*av), strlen(filepath)) == 0)
+		our_strcpy(filepath, path[j]);
+		if (our_strncmp(filepath, (*av), our_strlen(filepath)) == 0)
 		{
 			if (stat((*av), &st) == 0)
 				return (path_free(path, num, 1));
 		}
 		else
 		{
-			strcat(filepath, "/");
-			strcat(filepath, (*av));
+			our_strcat(filepath, "/");
+			our_strcat(filepath, (*av));
 			if (access(filepath, F_OK) == 0)
 			{
-				(*av) = strdup(filepath);
+				(*av) = our_strdup(filepath);
 				return (path_free(path, num, 2));
 			}
 		}
