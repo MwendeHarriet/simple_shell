@@ -16,8 +16,7 @@ void display_prompt(void)
 void execute_input(char *input)
 {
 	int argc = 0;
-	char *argv[MAX_ARGS + 1];
-	char *token = strtok(input, " \t\n");
+	char *argv[MAX_ARGS + 1], char *token = strtok(input, " \t\n");
 	pid_t pid;
 
 	while (token != NULL && argc < MAX_ARGS)
@@ -27,7 +26,6 @@ void execute_input(char *input)
 		token = strtok(NULL, " \t\n");
 	}
 	argv[argc] = NULL;
-
 	if (argc == 0)
 	{
 		return;
@@ -36,7 +34,11 @@ void execute_input(char *input)
 	{
 		if (argc > 1)
 		{
+<<<<<<< HEAD
 			int exit_shell = our_atoi(argv[1]);
+=======
+			exit_shell = our_atoi(argv[1]);
+>>>>>>> 6772ba9cdd65eeb9bac684cce5e0d460ea392fc6
 			exit(exit_shell);
 			
 		}
@@ -71,7 +73,6 @@ void execute_input(char *input)
 }
 /**
   *read_execute_loop - read a line from the standard input
-  *
   *Return: pointer that points to a str with the line content
   */
 void read_execute_loop(void)
@@ -84,7 +85,6 @@ void read_execute_loop(void)
 	{
 		if (isatty(STDIN_FILENO))
 			display_prompt();
-
 		buffersize = getline(&input, &bufsize, stdin);
 		if (buffersize == -1)
 		{
@@ -101,7 +101,6 @@ void read_execute_loop(void)
 				exit(EXIT_FAILURE);
 			}
 		}
-
 		if (buffersize > 0 && input[buffersize - 1] == '\n')
 		{
 			input[buffersize - 1] = '\0';
