@@ -1,4 +1,5 @@
 #include "main.h"
+#include <signal.h>
 
 /**
   *main - Entry point

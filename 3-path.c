@@ -2,143 +2,100 @@
 #include <string.h>
 
 /**
- *execute_ccommand - Execute a command in a child process
- *@command: The command to execute
- *This function forks a child process and executes the specified command.
- * It tokenizes the command string and uses execvp to execute the command
- * in the child process.
+ * put_paths - functions to set the array of the path
+ * @path: the specific array being set
+ * @num: tokens number
+ * @tok: tokened string
  */
-void execute_ccommand(char *command)
+void put_paths(char **path, const int num, char *tok)
 {
-	pid_t pid;
-	int status;
+	int j;
 
-	pid = fork();
-	if (pid == 0)
+	for (j = 0; j < num; j++)
 	{
-		char *args[MAX_ARGS];
-		char *token;
-		int arg_count = 0;
+		path[j] = our_strdup(tok);
+		tok += our_strlen(tok) + 1;
+	}
+	path[j] = NULL;
+}
+/**
+ * path_free - frees paths array to prevent memory leaks
+ * @path: the specific array being set
+ * @num: the tokens number
+ * @return_value: this is the value being returned
+ * Return: return value
+ */
+int path_free(char **path, int num, int return_value)
+{
+	int j;
 
-		token = strtok(command, " ");
-		while (token != NULL && arg_count < MAX_ARGS - 1)
+	for (j = 0; j <= num; j++)
+		free(path[j]);
+	free(path);
+
+	return (return_value);
+}
+/**
+ * tokenize - this is the entry point
+ * Description: used to tokenize a string
+ * @s: the string beinng tokenized
+ * @c: the separator
+ * Return: num of tokens
+ */
+int tokenize(char *s, char c)
+{
+	int j, num = 1;
+
+	for (j = 0; s[j]; j++)
+	{
+		if (s[j] == c)
 		{
-			args[arg_count] = token;
-			arg_count++;
-			token = strtok(NULL, " ");
+			num++;
+			s[j] = '\0';
 		}
-		args[arg_count] = NULL;
-
-		execve(args[0], args, NULL);
-		exit(EXIT_FAILURE);
 	}
-	else if (pid < 0)
-	{
-		write(STDERR_FILENO, "fork failed\n", 12);
-		return;
-	}
-	else
-	{
-		waitpid(pid, &status, 0);
-	}
-}
-/**
- *process_input - Process user input and execute commands
- *
- *This function reads user input from stdin, executes the specified commands,
- * and continues reading until an EOF is encountered.
- */
-
-void process_input(void)
-{
-	char *command = NULL;
-	size_t bufsize = 0;
-	ssize_t characters;
-
-	while (1)
-	{
-		write(STDOUT_FILENO, ":) ", 3);
-		characters = getline(&command, &bufsize, stdin);
-		if (characters == -1)
-			break;
-		command[characters - 1] = '\0';
-
-		if (strcmp(command, "") == 0)
-			continue;
-
-		execute_ccommand(command);
-	}
-
-	free(command);
-}
-/**
- *path_main - gets the PATH environment variable
- * and processes user input
- *Return: EXIT_SUCCESS on success, or EXIT_FAILURE
- *if PATH environment variable is not available
- *
- */
-
-int path_main(void)
-{
-	char *path = NULL;
-
-	path = getenv("PATH");
-	if (path == NULL)
-	{
-		write(STDERR_FILENO, "Failed to retrieve PATH environment variable\n", 45);
-		return (EXIT_FAILURE);
-	}
-
-	process_input();
-
-	return (EXIT_SUCCESS);
+	return (num);
 }
 
 /**
- * find_command_path - Searches for the command in the directories
- * listed in the "PATH" variable.
- * @command: The command to find.
- * @path: The "PATH" variable.
- *
- * Return: The full path of the command if found, NULL otherwise.
+ * path - functions to sort out the path
+ * @av: the path
+ * Return: 0 on failure.
  */
-char *find_command_path(char *command, char *path)
+int path(char **av)
 {
-	char *token, *path_copy, *full_path;
-	int command_len, path_len, full_path_len;
+	struct stat st;
+	const char *p = our_getenv("PATH");
+	char filepath[256];
+	char **path = malloc(20 * sizeof(char *)), *tok;
+	int j, num = 1;
 
-	command_len = our_strlen(command);
-	path_copy = our_strdup(path);
-	if (!path_copy)
-		return (NULL);
-
-	token = strtok(path_copy, ":");
-	while (token)
+	if (stat((*av), &st) == 0)
+		return (path_free(path, -1, 1));
+	if (p == NULL)
+		return (path_free(path, -1, 0));
+	tok = our_strdup(p);
+	num = tokenize(tok, ':');
+	put_paths(path, num, tok);
+	free(tok);
+	for (j = 0; j < num; j++)
 	{
-		path_len = our_strlen(token);
-		full_path_len = path_len + command_len + 2;
-		full_path = malloc(full_path_len);
-		if (!full_path)
+		our_strcpy(filepath, path[j]);
+		if (our_strncmp(filepath, (*av), our_strlen(filepath)) == 0)
 		{
-			free(path_copy);
-			return (NULL);
+			if (stat((*av), &st) == 0)
+				return (path_free(path, num, 1));
 		}
-
-		our_strcpy(full_path, token);
-		our_strcat(full_path, "/");
-		our_strcat(full_path, command);
-
-		if (access(full_path, F_OK | X_OK) == 0)
+		else
 		{
-			free(path_copy);
-			return (full_path);
+			our_strcat(filepath, "/");
+			our_strcat(filepath, (*av));
+			if (access(filepath, F_OK) == 0)
+			{
+				(*av) = our_strdup(filepath);
+				return (path_free(path, num, 2));
+			}
 		}
-
-		free(full_path);
-		token = strtok(NULL, ":");
 	}
-
-	free(path_copy);
-	return (NULL);
+	return (path_free(path, num, 0));
 }

@@ -12,7 +12,6 @@ void display_prompt(void)
 {
 	write(STDOUT_FILENO, "#cisfun:)", 10);
 }
-
 /**
   *execute_input - functions to execute commands
   *@input: The command to be executed.
@@ -74,7 +73,6 @@ void execute_input(char *input)
 		}
 	}
 }
-
 /**
   *read_execute_loop - read a line from the standard input
   *
@@ -112,7 +110,6 @@ void read_execute_loop(void)
 		{
 			input[buffersize - 1] = '\0';
 		}
-
 		if (our_strcmp(input, "") == 0)
 		{
 			continue;
@@ -121,31 +118,4 @@ void read_execute_loop(void)
 		execute_input(input);
 	}
 	free(input);
-}
-
-/**
-  *tokenise_input -this function takes the command line arguments,
-  *splits them into separate tokens and stores the command token and
-  *argument tokens in the provided arrays
-  *@argc: argument counter
-  *@argv: argument vector,array of command argument strings
-  *@command: pointer to command token
-  *@args: array to argument tokens
-  *Return: nothing
-  */
-
-void tokenise_input(int argc, char *argv[], char **command, char **args)
-{
-	int args_index = 0;
-
-	int i;
-	*command = argv[1];
-
-	for (i = 2; i < argc; i++)
-	{
-		args[args_index] = argv[i];
-		args_index++;
-	}
-
-	args[args_index] = NULL;
 }
