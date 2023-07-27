@@ -42,5 +42,6 @@ void execute_command(char *command, char **args)
 			write(STDERR_FILENO, error_statement, our_strlen(error_statement));
 			exit(EXIT_FAILURE);
 		}
+		free(command);
 	}
 }

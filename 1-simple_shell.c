@@ -101,7 +101,7 @@ void read_execute_loop(void)
 		input = NULL;
 		if (isatty(STDIN_FILENO))
 			display_prompt();
-		buffersize = our_getline(&input, &bufsize, stdin);
+		buffersize = getline(&input, &bufsize, stdin);
 		if (buffersize == -1)
 		{
 			if (feof(stdin))
