@@ -29,8 +29,7 @@ extern char *global_buffer;
 int our_putchar(char c);
 
 /*our_getline*/
-void free_and_exit(char **line_buffer);
-ssize_t our_getline(char **lineptr, size_t *n, FILE *stream);
+
 
 /*our_strlen*/
 size_t our_strlen(const char *str);
@@ -142,9 +141,9 @@ int flush_buffer(void);
 /*free_input*/
 void free_input(char *input);
 
+
 int our_snprintf(char *str, size_t size, const char *format, ...);
 const char *our_getenv(const char *name);
 int shell_main(void);
-
 
 #endif

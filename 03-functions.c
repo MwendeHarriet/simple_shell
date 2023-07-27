@@ -95,3 +95,54 @@ char *our_strsep(char **stringp, const char *delim)
 	*stringp = NULL;
 	return (token_len > 0 ? token_start : NULL);
 }
+
+/**
+ * our_strncat - mimics the standard strncat function
+ * @dest: pointer to the destination string
+ * @src: pointer to the source string
+ * @n: maximum number of characters from src to concatenate
+ * Return: pointer to resulting concatenated string
+ */
+char *our_strncat(char *dest, const char *src, size_t n)
+{
+	char *dest_start = dest;
+
+	while (*dest != '\0')
+	{
+		dest++;
+	}
+	while (*src != '\0' && n > 0)
+	{
+		*dest++ = *src++;
+		n--;
+	}
+
+	*dest = '\0';
+
+	return (dest_start);
+}
+
+/**
+ * our_strncpy - entry point mimics standard strncpy function
+ * @dest: pointer to destination buffer
+ * @src: pointer to the source string
+ * @n: maximum number of characters to copy from src
+ * Return: pointer to the destination buffer
+ */
+char *our_strncpy(char *dest, const char *src, size_t n)
+{
+	char *dest_start = dest;
+
+	while (*src != '\0' && n > 0)
+	{
+		*dest++ = *src++;
+	n--;
+	}
+	while (n > 0)
+	{
+		*dest++ = '\0';
+		n--;
+	}
+
+	return (dest_start);
+}
