@@ -26,13 +26,21 @@ void execute_command(char *command, char **args)
 		{
 			our_strcpy(error_statement, command);
 			our_strcpy(error_statement + our_strlen(command),
-					": command not found\n");
+					": No such file or directory\n");
 			write(STDERR_FILENO, error_statement, our_strlen(error_statement));
 			exit(EXIT_FAILURE);
 		}
 		else if (result == 2)
 		{
 			execve(command, args, NULL);
+		}
+		else
+		{
+			our_strcpy(error_statement, command);
+			our_strcpy(error_statement + our_strlen(command),
+					": No such file or directory\n");
+			write(STDERR_FILENO, error_statement, our_strlen(error_statement));
+			exit(EXIT_FAILURE);
 		}
 	}
 }
