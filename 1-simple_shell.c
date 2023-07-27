@@ -52,6 +52,7 @@ void execute_command_or_process(int argc, char *argv[])
 		if (argc > 1)
 		{
 			int exit_shell = our_atoi(argv[1]);
+
 			exit(exit_shell);
 		}
 		else
