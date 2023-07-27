@@ -17,6 +17,8 @@ void execute_command(char *command, char **args)
 	if (stat(command, &st) == 0)
 	{
 		execve(command, args, NULL);
+		perror("execve");
+		exit(EXIT_FAILURE);
 	}
 	else
 	{

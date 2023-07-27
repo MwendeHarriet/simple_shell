@@ -94,41 +94,34 @@ void execute_command_or_process(int argc, char *argv[])
   */
 void read_execute_loop(void)
 {
-	char *input = NULL;
-	size_t bufsize = 0;
-	ssize_t buffersize;
+	char input[MAX_INPUT];
+	int read_status;
 
 	while (1)
 	{	
-		input = NULL;
 		if (isatty(STDIN_FILENO))
 			display_prompt();
-		buffersize = getline(&input, &bufsize, stdin);
-		if (buffersize == -1)
+
+		read_status = read(STDIN_FILENO, input, MAX_INPUT);
+		if (read_status == -1)
 		{
-			if (feof(stdin))
-			{
-				free(input);
-				write(STDOUT_FILENO, "\n", 1);
-				exit(EXIT_SUCCESS);
-			}
-			else
-			{
-				free(input);
-				perror("Error while reading the line from stdin");
-				exit(EXIT_FAILURE);
-			}
+			perror("read");
+			exit(EXIT_FAILURE);
 		}
-		if (buffersize > 0 && input[buffersize - 1] == '\n')
+
+		if (read_status == 0)
 		{
-			input[buffersize - 1] = '\0';
+			write(STDOUT_FILENO, "\n", 1);
+			exit(EXIT_SUCCESS);
 		}
+
+		if (input[read_status - 1] == '\n')
+			input[read_status - 1] = '\0';
+
 		if (our_strcmp(input, "") == 0)
 		{
 			continue;
 		}
 		execute_input(input);
-		free(input);
 	}
-	free_input(input);
 }
