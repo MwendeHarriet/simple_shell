@@ -96,10 +96,12 @@ void read_execute_loop(void)
 	ssize_t buffersize;
 
 	while (1)
-	{
+	{	
+		free(input);
+		input = NULL;
 		if (isatty(STDIN_FILENO))
 			display_prompt();
-		buffersize = getline(&input, &bufsize, stdin);
+		buffersize = our_getline(&input, &bufsize, stdin);
 		if (buffersize == -1)
 		{
 			if (feof(stdin))
@@ -127,5 +129,17 @@ void read_execute_loop(void)
 		execute_input(input);
 
 	}
+	free_input(input);
+}
 
+ /**
+* free_input -free the memory allocated for 'input' using 'getline'.
+ * @input: input to be freed.
+ */
+void free_input(char *input)
+{
+    if (input != NULL)
+    {
+        free(input);
+    }
 }

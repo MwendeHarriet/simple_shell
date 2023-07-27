@@ -139,6 +139,8 @@ char *our_strsep(char **stringp, const char *delim);
 /*flush_buffer*/
 int flush_buffer(void);
 
+/*free_input*/
+void free_input(char *input);
 
 int our_snprintf(char *str, size_t size, const char *format, ...);
 const char *our_getenv(const char *name);
