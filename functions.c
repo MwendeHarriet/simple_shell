@@ -53,6 +53,7 @@ int our_snprintf(char *str, size_t size, const char *format, ...)
 	va_end(args);
 	return (written_characters);
 }
+
 /**
  * our_getenv - our approach on the getenv function :).
  * @name: it is basically the name of environment variable.
