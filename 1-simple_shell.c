@@ -22,7 +22,6 @@ void execute_input(char *input)
 	int argc = 0;
 	char *argv[MAX_ARGS + 1];
 	char *token = strtok(input, " \t\n");
-	pid_t pid;
 
 	while (token != NULL && argc < MAX_ARGS)
 	{
@@ -52,7 +51,7 @@ void execute_command_or_process(int argc, char *argv[])
 	{
 		if (argc > 1)
 		{
-			int exit_shell = our_atoi(argv[1]);
+			exit_shell = our_atoi(argv[1]);
 			exit(exit_shell);
 		}
 		else
