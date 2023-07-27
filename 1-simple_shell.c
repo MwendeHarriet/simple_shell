@@ -6,7 +6,7 @@
   */
 void display_prompt(void)
 {
-	write(STDOUT_FILENO, "#cisfun:)", 10);
+	write(STDOUT_FILENO, "#cisfun$", 10);
 }
 
 #include "main.h"
@@ -125,7 +125,6 @@ void read_execute_loop(void)
 		{
 			continue;
 		}
-
 		execute_input(input);
 
 	}
