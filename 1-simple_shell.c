@@ -6,7 +6,7 @@
   */
 void display_prompt(void)
 {
-	write(STDOUT_FILENO, "#cisfun$", 10);
+	write(STDOUT_FILENO, "#cisfun$", 9);
 }
 
 #include "main.h"
@@ -35,7 +35,10 @@ void execute_input(char *input)
 	{
 		return;
 	}
-	execute_command_or_process(argc, argv);
+	else
+	{
+		execute_command_or_process(argc, argv);
+	}
 }
 
 /**
@@ -97,11 +100,10 @@ void read_execute_loop(void)
 
 	while (1)
 	{	
-		free(input);
 		input = NULL;
 		if (isatty(STDIN_FILENO))
 			display_prompt();
-		buffersize = our_getline(&input, &bufsize, stdin);
+		buffersize = getline(&input, &bufsize, stdin);
 		if (buffersize == -1)
 		{
 			if (feof(stdin))
@@ -126,7 +128,7 @@ void read_execute_loop(void)
 			continue;
 		}
 		execute_input(input);
-
+		free(input);
 	}
 	free_input(input);
 }
