@@ -131,15 +131,3 @@ void read_execute_loop(void)
 	}
 	free_input(input);
 }
-
- /**
-* free_input -free the memory allocated for 'input' using 'getline'.
- * @input: input to be freed.
- */
-void free_input(char *input)
-{
-    if (input != NULL)
-    {
-        free(input);
-    }
-}
