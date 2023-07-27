@@ -122,12 +122,11 @@ void read_execute_loop(void)
 		}
 		if (our_strcmp(input, "") == 0)
 		{
-			free(input);
 			continue;
 		}
 
 		execute_input(input);
-		free(input);
+		
 	}
-	free(input);
+
 }
