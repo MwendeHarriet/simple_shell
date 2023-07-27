@@ -16,7 +16,8 @@ void display_prompt(void)
 void execute_input(char *input)
 {
 	int argc = 0;
-	char *argv[MAX_ARGS + 1], char *token = strtok(input, " \t\n");
+	char *argv[MAX_ARGS + 1];
+	char *token = strtok(input, " \t\n");
 	pid_t pid;
 
 	while (token != NULL && argc < MAX_ARGS)
@@ -34,20 +35,15 @@ void execute_input(char *input)
 	{
 		if (argc > 1)
 		{
-<<<<<<< HEAD
 			int exit_shell = our_atoi(argv[1]);
-=======
-			exit_shell = our_atoi(argv[1]);
->>>>>>> 6772ba9cdd65eeb9bac684cce5e0d460ea392fc6
 			exit(exit_shell);
-			
 		}
 		else
 		{
 			exit(EXIT_SUCCESS);
 		}
 	}
-	else if (our_strcmp(argv[0], "env" ) == 0)
+	else if (our_strcmp(argv[0], "env") == 0)
 	{
 		our_env();
 	}

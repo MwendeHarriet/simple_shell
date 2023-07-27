@@ -13,11 +13,8 @@
 #include <limits.h>
 #include <dirent.h>
 #include <stdarg.h>
-<<<<<<< HEAD
 #include <string.h>
-=======
 #include <stdbool.h>
->>>>>>> 6772ba9cdd65eeb9bac684cce5e0d460ea392fc6
 
 #define MAX_ARGS 100
 
@@ -104,7 +101,7 @@ int write_strings(char *str);
 int write_numbers(int nums);
 
 /*main*/
-int main(int argc, char **argv);
+int main(void);
 
 /*check_enter*/
 int check_enter(char **buffer);
