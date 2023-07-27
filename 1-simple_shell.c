@@ -118,13 +118,16 @@ void read_execute_loop(void)
 		if (buffersize > 0 && input[buffersize - 1] == '\n')
 		{
 			input[buffersize - 1] = '\0';
+			free(input);
 		}
 		if (our_strcmp(input, "") == 0)
 		{
+			free(input);
 			continue;
 		}
 
 		execute_input(input);
+		free(input);
 	}
 	free(input);
 }
