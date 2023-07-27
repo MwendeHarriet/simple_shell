@@ -12,15 +12,20 @@ void display_prompt(void)
 {
 	write(STDOUT_FILENO, "#cisfun:)", 10);
 }
+
+#include "main.h"
+
 /**
-  *execute_input - functions to execute commands
-  *@input: The command to be executed.
-  *Return: the result after execution of command
-  */
+ * execute_input - Functions to execute commands.
+ * @input: The command to be executed.
+ *
+ * Return: The result after execution of the command.
+ */
 void execute_input(char *input)
 {
 	int argc = 0;
-	char *argv[MAX_ARGS + 1], char *token = strtok(input, " \t\n");
+	char *argv[MAX_ARGS + 1];
+	char *token = strtok(input, " \t\n");
 	pid_t pid;
 
 	while (token != NULL && argc < MAX_ARGS)
@@ -30,10 +35,23 @@ void execute_input(char *input)
 		token = strtok(NULL, " \t\n");
 	}
 	argv[argc] = NULL;
+
 	if (argc == 0)
 	{
 		return;
 	}
+	execute_command_or_process(argc, argv);
+}
+
+/**
+ * execute_command_or_process - Execute the appropriate command or process.
+ * @argc: Number of arguments in the command.
+ * @argv: Array of arguments in the command.
+ */
+void execute_command_or_process(int argc, char *argv[])
+{
+	pid_t pid;
+
 	if (our_strcmp(argv[0], "exit") == 0)
 	{
 		if (argc > 1)
@@ -70,6 +88,7 @@ void execute_input(char *input)
 		}
 	}
 }
+
 /**
   *read_execute_loop - read a line from the standard input
   *Return: pointer that points to a str with the line content
