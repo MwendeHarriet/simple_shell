@@ -7,7 +7,7 @@
 void display_prompt(void)
 {
 
-	write(STDOUT_FILENO, "#cisfun$", 9);
+	write(STDOUT_FILENO, "#cisfun$", 8);
 }
 
 #include "main.h"
@@ -67,6 +67,14 @@ void execute_command_or_process(int argc, char *argv[])
 	else if (our_strcmp(argv[0], "env") == 0)
 	{
 		our_env();
+	}
+	else if (our_strcmp(argv[0], "setenv") == 0)
+	{
+		our_setenv(argv, environ, argv[0]);
+	}
+	else if (our_strcmp(argv[0], "unsetenv") == 0)
+	{
+		our_unsetenv(argv, environ, argv[0]);
 	}
 	else
 	{

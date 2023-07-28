@@ -16,7 +16,7 @@ int shell_main(void)
 	ssize_t bytes_read;
 	size_t bufsize = BUFFER_SIZE;
 
-	write(STDOUT_FILENO, "#cisfun:) ", 10);
+	write(STDOUT_FILENO, "#cisfun$", 8);
 
 	while ((bytes_read = read(STDIN_FILENO, input, bufsize)) > 0)
 	{
