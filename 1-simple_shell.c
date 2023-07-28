@@ -48,8 +48,7 @@ void execute_input(char *input)
  * @argv: Array of arguments in the command.
  */
 void execute_command_or_process(int argc, char *argv[])
-{
-	pid_t pid;
+{	pid_t pid;
 
 	if (our_strcmp(argv[0], "exit") == 0)
 	{
@@ -71,7 +70,6 @@ void execute_command_or_process(int argc, char *argv[])
 	else
 	{
 		pid = fork();
-
 		if (pid < 0)
 		{
 			perror("fork failed");

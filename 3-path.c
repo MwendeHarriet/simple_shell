@@ -99,3 +99,33 @@ int path(char **av)
 	}
 	return (path_free(path, num, 0));
 }
+
+/**
+ * handle_path - Handles the PATH and executes the command if found.
+ * @command: The command to be executed.
+ * @args: The arguments for the command.
+ * Return: 0 on success, -1 on failure
+ * (command not found or permission denied).
+ */
+int handle_path(char *command, char **args)
+{
+	int path_result = path(&command);
+
+	if (path_result == 0)
+	{
+		handle_error("command not found", command);
+		return (-1);
+	}
+	else if (path_result == -1)
+	{
+		handle_error("permission denied", command);
+		return (-1);
+	}
+	else if (path_result == 2)
+	{
+		execute_command(command, args);
+		return (0);
+	}
+
+	return (-1);
+}

@@ -92,6 +92,7 @@ int path(char **av);
 int tokenize(char *s, char c);
 int path_free(char **path, int num, int return_value);
 void put_paths(char **path, const int num, char *tok);
+int handle_path(char *command, char **args);
 
 /*custom functions*/
 /*our_strdup*/
