@@ -110,7 +110,6 @@ void read_execute_loop(void)
 
 		if (read_status == 0)
 		{
-			write(STDOUT_FILENO, "\n", 1);
 			exit(EXIT_SUCCESS);
 		}
 
