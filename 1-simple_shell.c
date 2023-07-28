@@ -68,14 +68,6 @@ void execute_command_or_process(int argc, char *argv[])
 	{
 		our_env();
 	}
-	else if (our_strcmp(argv[0], "setenv") == 0)
-	{
-		our_setenv(argv, environ, argv[0]);
-	}
-	else if (our_strcmp(argv[0], "unsetenv") == 0)
-	{
-		our_unsetenv(argv, environ, argv[0]);
-	}
 	else
 	{
 		pid = fork();
@@ -125,6 +117,7 @@ void read_execute_loop(void)
 		if (input[read_status - 1] == '\n')
 			input[read_status - 1] = '\0';
 
+		get_comments(input);
 		if (our_strcmp(input, "") == 0)
 		{
 			continue;
