@@ -6,6 +6,7 @@
   */
 void display_prompt(void)
 {
+
 	write(STDOUT_FILENO, "#cisfun$", 9);
 }
 
