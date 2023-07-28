@@ -61,7 +61,7 @@ void execute_command_or_process(int argc, char *argv[])
 		}
 		else
 		{
-			exit(EXIT_SUCCESS);
+			return;
 		}
 	}
 	else if (our_strcmp(argv[0], "env") == 0)

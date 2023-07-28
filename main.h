@@ -73,6 +73,7 @@ int our_unsetenv(char **args, void *env, const char *prog_name);
 
 /*exit*/
 int exit_shell(char **args);
+/*void exit_shell(char *buffer, char **av, int lines);*/
 
 /*our_atoi*/
 int our_atoi(const char *str);
