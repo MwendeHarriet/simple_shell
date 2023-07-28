@@ -8,6 +8,5 @@
 int main(void)
 {
 	read_execute_loop();
-
 	return (EXIT_SUCCESS);
 }

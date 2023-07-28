@@ -1,63 +1,48 @@
-#include <unistd.h>
-#include <stdlib.h>
-#include "shell.h"
 #include "main.h"
-#define BUFFER_SIZE 4096
-#define READ_SIZE 1024
 
 /**
- * rlLine - realloc the line buffer
- * @line: to be buffered
- * @oldSize: something borrowed
- * @newSize: something blue
- *
- * Return: new allocated buffer
+ * our_getline -entry point
+ * @input: input
+ * @bufsize: buffsize
+ * @stream: stream
  */
-char *rlLine(char **line, unsigned int oldSize, unsigned int newSize)
-{
-	char *newLine = NULL;
-	unsigned int i;
 
-	newLine = malloc(newSize);
-	if (newLine)
-	{
-		for (i = 0; i < oldSize; i++)
-			newLine[i] = (*line)[i];
-		free(*line);
-		*line = newLine;
-	}
-	return (newLine);
-}
-/**
- * _getline - fetches a line of chars from stdin
- * @params: parameters
- *
- * Return: number of char read
- */
-int _getline(param_t *params)
-{
-	char *line = NULL;
-	static unsigned int bufSize = BUFFER_SIZE;
-	char *writeHead = line;
-	unsigned int len;
+int our_getline(char **input, size_t *bufsize, FILE *stream) {
+    int ch;
+    char *temp;
+    size_t len = 0;
+    size_t capacity = 16;
 
-	line = malloc(BUFFER_SIZE);
-	do {
-		len = read(0, writeHead, BUFFER_SIZE);
-		if (len == 0)
-			break;
-		writeHead += len;
-		if (writeHead >= (line + BUFFER_SIZE - 1 - READ_SIZE))
-		{
-			line = rlLine(&line, bufSize, bufSize * 2);
-			bufSize *= 2;
-		}
-	} while (*(writeHead - 1) != '\n');
+    char *buffer = (char *)malloc(capacity * sizeof(char));
+    if (!buffer) {
 
-	free(params->buffer);
-	params->buffer = line;
-	if (len == 0)
-		return (-1);
-	return (_strlen(params->buffer));
+        write(STDERR_FILENO, "Memory allocation failed.\n", 26);
+        return -1;
+    }
+
+    while ((ch = fgetc(stream)) != EOF && ch != '\n') {
+       
+        if (len == capacity - 1) {
+            capacity *= 2;
+       		temp = (char *)realloc(buffer, capacity * sizeof(char));
+            if (!temp) {
+               
+                free(buffer);
+                write(STDERR_FILENO, "Memory allocation failed during resize.\n", 40);
+                return -1;
+            }
+            buffer = temp;
+        }
+
+        buffer[len++] = ch;
+    }
+
+
+    buffer[len] = '\0';
+
+    *input = buffer;
+    *bufsize = capacity;
+	
+    return len;
 }
 

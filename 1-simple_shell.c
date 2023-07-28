@@ -103,13 +103,12 @@ void read_execute_loop(void)
 		input = NULL;
 		if (isatty(STDIN_FILENO))
 			display_prompt();
-		buffersize = getline(&input, &bufsize, stdin);
+		buffersize = our_getline(&input, &bufsize, stdin);
 		if (buffersize == -1)
 		{
 			if (feof(stdin))
 			{
 				free(input);
-				write(STDOUT_FILENO, "\n", 1);
 				exit(EXIT_SUCCESS);
 			}
 			else
@@ -122,6 +121,7 @@ void read_execute_loop(void)
 		if (buffersize > 0 && input[buffersize - 1] == '\n')
 		{
 			input[buffersize - 1] = '\0';
+			free(input);
 		}
 		if (our_strcmp(input, "") == 0)
 		{

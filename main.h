@@ -23,13 +23,12 @@ extern char **environ;
 extern char *global_buffer;
 
 /*used in our_getline*/
-#define BUFFERSIZE 1024
 
 /*our_putchar*/
 int our_putchar(char c);
 
 /*our_getline*/
-
+int our_getline(char **input, size_t *bufsize, FILE *stream);
 
 /*our_strlen*/
 size_t our_strlen(const char *str);
