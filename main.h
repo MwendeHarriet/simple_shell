@@ -57,6 +57,8 @@ void sigint_handler(int sig);
 
 /*execute commands*/
 void execute_command(char *command, char **args);
+void handle_error(const char *error_msg, char *command);
+void int_to_str(int num, char *str);
 
 /*print_hsh_error*/
 void print_hsh_error(const char *message, const char *
@@ -72,8 +74,7 @@ int our_setenv(char **args, void *env, const char *prog_name);
 int our_unsetenv(char **args, void *env, const char *prog_name);
 
 /*exit*/
-int exit_shell(char **args);
-/*void exit_shell(char *buffer, char **av, int lines);*/
+int exit_shell(char **args, void *buffer, void *av, void *lines);
 
 /*our_atoi*/
 int our_atoi(const char *str);
