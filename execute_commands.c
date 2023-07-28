@@ -72,15 +72,33 @@ void handle_error(const char *error_msg, char *command)
  */
 void execute_command(char *command, char **args)
 {
+	pid_t pid;
+	int exit_status = 0;
+
 	struct stat st;
 
 	if (stat(command, &st) == 0)
 	{
 		if (access(command, X_OK) == 0)
 		{
-			if (execve(command, args, environ) == -1)
+			get_variables(args, &exit_status);
+			pid = fork();
+
+			if (pid < 0)
 			{
-				handle_error(strerror(errno), command);
+				perror("fork failed");
+				exit(EXIT_FAILURE);
+			}
+			else if (pid == 0)
+			{
+				if (execve(command, args, environ) == -1)
+				{
+					handle_error(strerror(errno), command);
+				}
+			}
+			else
+			{
+				wait(NULL);
 			}
 		}
 		else
