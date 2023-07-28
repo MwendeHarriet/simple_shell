@@ -101,7 +101,6 @@ void read_execute_loop(void)
 	{	
 		if (isatty(STDIN_FILENO))
 			display_prompt();
-
 		read_status = read(STDIN_FILENO, input, MAX_INPUT);
 		if (read_status == -1)
 		{
