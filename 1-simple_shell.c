@@ -73,7 +73,7 @@ void execute_command_or_process(int argc, char *argv[])
 
 		if (pid < 0)
 		{
-			perror("Fork failed");
+			perror("fork failed");
 			exit(EXIT_FAILURE);
 		}
 		else if (pid == 0)

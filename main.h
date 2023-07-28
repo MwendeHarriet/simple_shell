@@ -34,7 +34,7 @@ int our_getline(char **input, size_t *bufsize, FILE *stream);
 size_t our_strlen(const char *str);
 
 /*simple_shell*/
-void execute_input(char *input);
+
 void display_prompt(void);
 void read_execute_loop(void);
 void execute_command_or_process(int argc, char *argv[]);
@@ -57,6 +57,10 @@ void sigint_handler(int sig);
 
 /*execute commands*/
 void execute_command(char *command, char **args);
+
+/*print_hsh_error*/
+void print_hsh_error(const char *message, const char *
+shell_name);
 
 /*our_strcpy*/
 void our_strcpy(char *dest, const char *src);
