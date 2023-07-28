@@ -16,7 +16,7 @@ void execute_command(char *command, char **args)
 	}
 	if (stat(command, &st) == 0)
 	{
-		execve(command, args, NULL);
+		execve(command, args, environ);
 		perror("execve");
 		exit(EXIT_FAILURE);
 	}
@@ -34,7 +34,7 @@ void execute_command(char *command, char **args)
 		}
 		else if (result == 2)
 		{
-			execve(command, args, NULL);
+			execve(command, args, environ);
 		}
 		else
 		{
