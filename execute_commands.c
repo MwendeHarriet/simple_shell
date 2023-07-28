@@ -7,18 +7,20 @@
  */
 void execute_command(char *command, char **args)
 {
-	struct stat st;
 	char error_statement[100];
-
+	struct stat st;
+	
 	if (!command)
 	{
 		return;
 	}
 	if (stat(command, &st) == 0)
 	{
-		execve(command, args, environ);
-		perror("execve");
-		exit(EXIT_FAILURE);
+		if (execve(command, args, environ) == -1)
+		{
+			perror("./hsh");
+			exit(EXIT_FAILURE);
+		}
 	}
 	else
 	{
@@ -26,21 +28,27 @@ void execute_command(char *command, char **args)
 
 		if (result == 1)
 		{
-			our_strcpy(error_statement, command);
-			our_strcpy(error_statement + our_strlen(command),
-					": No such file or directory\n");
+			our_strcpy(error_statement, "./hsh: ");
+			our_strcpy(error_statement + our_strlen("./hsh: "), command);
+			our_strcpy(error_statement + our_strlen("./hsh: ") +
+			our_strlen(command), ": No such file or directory\n");
 			write(STDERR_FILENO, error_statement, our_strlen(error_statement));
 			exit(EXIT_FAILURE);
 		}
 		else if (result == 2)
 		{
-			execve(command, args, environ);
+			if (execve(command, args, environ) == -1)
+			{
+				perror("./hsh");
+				exit(EXIT_FAILURE);
+			}
 		}
 		else
 		{
-			our_strcpy(error_statement, command);
-			our_strcpy(error_statement + our_strlen(command),
-					": No such file or directory\n");
+			our_strcpy(error_statement, "./hsh: ");
+			our_strcpy(error_statement + our_strlen("./hsh: "), command);
+			our_strcpy(error_statement + our_strlen("./hsh: ") +
+			our_strlen(command), ": No such file or directory\n");
 			write(STDERR_FILENO, error_statement, our_strlen(error_statement));
 			exit(EXIT_FAILURE);
 		}
