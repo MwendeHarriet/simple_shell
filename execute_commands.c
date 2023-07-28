@@ -50,15 +50,15 @@ void handle_error(const char *error_msg, char *command)
 	}
 	error_statement[len++] = ':';
 	error_statement[len++] = ' ';
-	for (i = 0; error_msg[i] != '\0'; i++)
-	{
-		error_statement[len++] = error_msg[i];
-	}
-	error_statement[len++] = ':';
-	error_statement[len++] = ' ';
 	for (i = 0; command[i] != '\0'; i++)
 	{
 		error_statement[len++] = command[i];
+	}
+	error_statement[len++] = ':';
+	error_statement[len++] = ' ';
+	for (i = 0; error_msg[i] != '\0'; i++)
+	{
+		error_statement[len++] = error_msg[i];
 	}
 	error_statement[len++] = '\n';
 	write(STDERR_FILENO, error_statement, len);
