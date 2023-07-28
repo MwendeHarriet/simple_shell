@@ -27,7 +27,7 @@ int exit_shell(char **args, void *buffer, void *av, void *lines)
 			return (2);
 		}
 
-		return (exit_status);
+		exit(exit_status);
 	}
 	return (0);
 }
