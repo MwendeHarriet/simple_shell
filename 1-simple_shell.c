@@ -1,6 +1,5 @@
 #include "main.h"
 
-
 /**
   *display_prompt -  Functions to allow user to see prompt
   */
@@ -48,8 +47,7 @@ void execute_input(char *input)
  * @argv: Array of arguments in the command.
  */
 void execute_command_or_process(int argc, char *argv[])
-{	pid_t pid;
-
+{
 	if (our_strcmp(argv[0], "exit") == 0)
 	{
 		if (argc > 1)
@@ -66,6 +64,31 @@ void execute_command_or_process(int argc, char *argv[])
 	else if (our_strcmp(argv[0], "env") == 0)
 	{
 		our_env();
+	}
+	else
+	{
+		handle_other_commands(argc, argv);
+	}
+}
+
+/**
+ * handle_other_commands - Handle non-built-in commands using PATH.
+ * @argc: Number of arguments in the command.
+ * @argv: Array of arguments in the command.
+ */
+void handle_other_commands(int argc __attribute__((unused)), char *argv[])
+{
+	pid_t pid;
+
+	int path_result = path(&argv[0]);
+
+	if (path_result == 0)
+	{
+		handle_error("command not found", argv[0]);
+	}
+	else if (path_result == -1)
+	{
+		handle_error("permission denied", argv[0]);
 	}
 	else
 	{

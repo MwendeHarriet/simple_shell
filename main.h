@@ -38,6 +38,7 @@ size_t our_strlen(const char *str);
 void display_prompt(void);
 void read_execute_loop(void);
 void execute_command_or_process(int argc, char *argv[]);
+void handle_other_commands(int argc __attribute__((unused)), char *argv[]);
 
 /*child_process*/
 int child_process(char **av, char *shell, char *p, int *exit_status);
