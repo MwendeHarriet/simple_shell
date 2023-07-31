@@ -80,12 +80,6 @@ int exit_shell(char **args, void *buffer, void *av, void *lines);
 /*our_atoi*/
 int our_atoi(const char *str);
 
-/*path.c*/
-
-char *find_command_path(char *command, char *path);
-void process_input(void);
-int path_main(void);
-
 /*our_strdup*/
 char *our_strdup(const char *s);
 

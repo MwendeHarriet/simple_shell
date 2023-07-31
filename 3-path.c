@@ -1,6 +1,5 @@
 #include "main.h"
 
-
 /**
  * put_paths - functions to set the array of the path
  * @path: the specific array being set
