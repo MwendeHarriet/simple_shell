@@ -17,7 +17,6 @@ char *our_strdup(const char *s)
 		our_strcpy(dup, s);
 	}
 	return (dup);
-	free(dup);
 }
 
 /**
